@@ -1,0 +1,32 @@
+<table border="1" cellspacing="0" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th>Назва</th>
+      <th>Категорія</th>
+      <th>Ціна</th>
+      <th>Кількість на складі</th>
+      <th>Статус ціни</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products"
+        [ngStyle]="{ 'background-color': product.stockCount === 0 ? '#ffcccc' : 'white' }">
+      <td>{{ product.name }}</td>
+      <td>{{ product.category }}</td>
+      <td>{{ product.price }} ₴</td>
+      <td>
+        <span *ngIf="product.stockCount > 0; else noStock">
+          ✅ {{ product.stockCount }}
+        </span>
+        <ng-template #noStock>
+          ❌ 0
+        </ng-template>
+      </td>
+      <td [ngSwitch]="true">
+        <span *ngSwitchCase="product.price < 50">Низька</span>
+        <span *ngSwitchCase="product.price >= 50 && product.price <= 200">Середня</span>
+        <span *ngSwitchDefault>Висока</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
