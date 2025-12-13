@@ -1,9 +1,0 @@
-.content-wrapper {
-  display: flex;
-}
-app-sidebar {
-  width: 200px;
-}
-app-main-content {
-  flex: 1;
-}
