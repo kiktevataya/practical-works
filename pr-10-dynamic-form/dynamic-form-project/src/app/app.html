@@ -1,0 +1,51 @@
+<h2>Анкета користувача</h2>
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+  <!-- ІМʼЯ -->
+  <div>
+    <label>Ім'я:</label>
+    <input type="text" formControlName="name">
+
+    <!-- required -->
+    <div *ngIf="userForm.get('name')?.touched && userForm.get('name')?.errors?.['required']">
+      <small style="color: red;">Ім'я є обовʼязковим</small>
+    </div>
+
+    <!-- кастомний валідатор -->
+    <div *ngIf="userForm.get('name')?.touched && userForm.get('name')?.errors?.['forbiddenWord']">
+      <small style="color: red;">Ім'я не повинно містити слово "test"</small>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- НАВИЧКИ -->
+  <div formArrayName="skills">
+    <h3>Навички</h3>
+
+    <div *ngFor="let skill of skills.controls; let i = index">
+      <input type="text" [formControlName]="i">
+
+      <button type="button" (click)="removeSkill(i)">
+        Видалити
+      </button>
+
+      <div *ngIf="skill.touched && skill.errors?.['required']">
+        <small style="color: red;">Навичка є обовʼязковою</small>
+      </div>
+    </div>
+
+    <button type="button" (click)="addSkill()">
+      Додати навичку
+    </button>
+  </div>
+
+  <hr>
+
+  <!-- SUBMIT -->
+  <button type="submit" [disabled]="userForm.invalid">
+    Відправити
+  </button>
+
+</form>
